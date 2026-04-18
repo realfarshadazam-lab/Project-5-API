@@ -8,16 +8,25 @@ const resetBtn = document.getElementById("resetBtn");
 
 let allGames = [];
 
+// Change this if you want a different season
+const SEASON = 2024;
+
 async function loadGames() {
   try {
-    const response = await fetch("https://api.balldontlie.io/v1/games", {
-      headers: {
-        Authorization: API_KEY
+    gamesGrid.innerHTML = `<div class="no-results">Loading games...</div>`;
+    featuredContent.innerHTML = `<p>Loading featured game...</p>`;
+
+    const response = await fetch(
+      `https://api.balldontlie.io/v1/games?seasons[]=${SEASON}&per_page=12`,
+      {
+        headers: {
+          Authorization: API_KEY
+        }
       }
-    });
+    );
 
     if (!response.ok) {
-      throw new Error("API request failed");
+      throw new Error(`API request failed with status ${response.status}`);
     }
 
     const data = await response.json();
@@ -35,15 +44,17 @@ async function loadGames() {
   } catch (error) {
     console.error("Error loading games:", error);
     featuredContent.innerHTML = `<p class="error-text">Failed to load featured game.</p>`;
-    gamesGrid.innerHTML = `<div class="error-text">Could not load NBA data. Check your API key.</div>`;
+    gamesGrid.innerHTML = `<div class="error-text">Could not load NBA data. Check your API key or endpoint.</div>`;
   }
 }
 
 function renderFeatured(game) {
   featuredContent.innerHTML = `
     <h3>${game.home_team.full_name} vs ${game.visitor_team.full_name}</h3>
+    <p><strong>Date:</strong> ${formatGameDate(game.date)}</p>
     <p><strong>Home Score:</strong> ${game.home_team_score}</p>
     <p><strong>Visitor Score:</strong> ${game.visitor_team_score}</p>
+    <p><strong>Season:</strong> ${game.season}</p>
     <span class="status">${game.status}</span>
   `;
 }
@@ -57,18 +68,42 @@ function renderGames(games) {
   }
 
   games.forEach((game) => {
+    const homeWon = game.home_team_score > game.visitor_team_score;
+    const visitorWon = game.visitor_team_score > game.home_team_score;
+
     const card = document.createElement("div");
     card.className = "game-card";
 
     card.innerHTML = `
       <h3>${game.home_team.full_name} vs ${game.visitor_team.full_name}</h3>
-      <p><strong>Home:</strong> ${game.home_team_score}</p>
-      <p><strong>Visitor:</strong> ${game.visitor_team_score}</p>
+      <p><strong>Date:</strong> ${formatGameDate(game.date)}</p>
+      <p>
+        <strong>Home:</strong> ${game.home_team_score}
+        ${homeWon ? "🏆" : ""}
+      </p>
+      <p>
+        <strong>Visitor:</strong> ${game.visitor_team_score}
+        ${visitorWon ? "🏆" : ""}
+      </p>
       <p><strong>Season:</strong> ${game.season}</p>
       <span class="status">${game.status}</span>
     `;
 
     gamesGrid.appendChild(card);
+  });
+}
+
+function formatGameDate(dateString) {
+  if (!dateString) {
+    return "Unknown";
+  }
+
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric"
   });
 }
 
@@ -101,6 +136,7 @@ teamSearch.addEventListener("input", function () {
 
   if (filteredGames.length > 0) {
     renderFeatured(filteredGames[0]);
+    animateFeatured();
   } else {
     featuredContent.innerHTML = `<p>No featured game found for that team.</p>`;
   }
