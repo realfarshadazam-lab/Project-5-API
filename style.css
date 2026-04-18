@@ -1,1 +1,144 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1d4ed8, #111827);
+  padding: 3rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: 3rem;
+  letter-spacing: 1px;
+}
+
+.hero-content p {
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  color: #dbeafe;
+}
+
+.container {
+  width: min(1100px, 92%);
+  margin: 2rem auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.controls input {
+  width: min(450px, 100%);
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.controls button {
+  padding: 0.9rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.controls button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.featured,
+.game-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 1.25rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.featured h2,
+.games-section h2 {
+  margin-top: 0;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.game-card h3 {
+  margin-top: 0;
+  color: #93c5fd;
+}
+
+.game-card p {
+  margin: 0.45rem 0;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  transition: transform 0.25s ease;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.2);
+  color: #bfdbfe;
+  font-size: 0.9rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: #cbd5e1;
+}
+
+.no-results,
+.error-text {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+}
+
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls input,
+  .controls button {
+    width: 100%;
+  }
+}
