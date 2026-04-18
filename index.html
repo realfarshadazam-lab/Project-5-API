@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBA Pulse</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>NBA Pulse</h1>
+      <p>NBA game scores and team matchups powered by an API</p>
+    </div>
+  </header>
 
+  <main class="container">
+    <section class="controls">
+      <input
+        type="text"
+        id="teamSearch"
+        placeholder="Search by team name..."
+      />
+      <button id="resetBtn">Reset</button>
+    </section>
+
+    <section class="featured" id="featuredCard">
+      <h2>Featured Matchup</h2>
+      <div id="featuredContent">Loading featured game...</div>
+    </section>
+
+    <section class="games-section">
+      <h2>Games</h2>
+      <div id="gamesGrid" class="games-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Created by Farshad Azam</p>
+    <p>API: BALLDONTLIE NBA API</p>
+    <p>Animation: Popmotion spring()</p>
+  </footer>
+
+  <script src="https://unpkg.com/popmotion@8.1.24/dist/popmotion.global.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
